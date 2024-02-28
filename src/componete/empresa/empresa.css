@@ -1,0 +1,23 @@
+.linha-80{
+    width: 80%;
+    margin: auto;
+    
+
+}
+
+.linhaForm{
+    display: flex;
+    flex-direction: row;   
+    width: 80%;
+    row-gap: 12px;
+    column-gap: 12px;
+    margin-bottom: 8px;
+    
+    
+    @media (max-width: 1200px) {
+        width: 90%;
+        flex-direction: column;
+    }
+
+}
+
