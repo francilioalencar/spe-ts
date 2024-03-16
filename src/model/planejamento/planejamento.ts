@@ -1,3 +1,5 @@
+import { wait } from "@testing-library/user-event/dist/utils";
+import DataFetchPlanejamento from "../../dataFetch/dataFetchPlanejamento";
 import Iplanejmento from "./iplanejamento";
 
 class Planejamento{
@@ -5,36 +7,40 @@ class Planejamento{
 
 
     constructor(
-        private _codigo:            string,
-        private _codigo_empresa:    string,
-        private _descricao:         string,
-        private _ano_inicio:        string,
-        private _ano_fim:           string,
-        private _missao:            string,
-        private _visao:             string,
-        private _valores:           string,
-        private _proposito:         string,
-        private _situacao:          string
+        private codigo:            string,
+        private codigo_empresa:    string,
+        private descricao:         string,
+        private ano_inicio:        string,
+        private ano_fim:           string,
+        private missao:            string,
+        private visao:             string,
+        private valores:           string,
+        private proposito:         string,
+        private situacao:          string
 
     ){}
 
 
-    public gravaPlanejamento(){
+    async gravaPlanejamento(){
+
+        const requestPost= new DataFetchPlanejamento('planejamento', this.getIplanejamento());
+        console.log( requestPost.sendPost() );
+
 
     }
 
     public getIplanejamento() :Iplanejmento{
         const iplanejamento ={
-            codigo:         this._codigo,
-            codigo_empresa: this._codigo_empresa,
-            descricao:      this._descricao,
-            ano_inicio:     this._ano_inicio,
-            ano_fim:        this._ano_fim,
-            missao:         this._missao,
-            visao:          this._visao,
-            valores:        this._valores,
-            proposito:      this._proposito,
-            situacao:       this._situacao
+            codigo:         this.codigo,
+            codigo_empresa: this.codigo_empresa,
+            descricao:      this.descricao,
+            ano_inicio:     this.ano_inicio,
+            ano_fim:        this.ano_fim,
+            missao:         this.missao,
+            visao:          this.visao,
+            valores:        this.valores,
+            proposito:      this.proposito,
+            situacao:       this.situacao
         }
 
         console.log('2: '+iplanejamento)
@@ -54,7 +60,7 @@ class Planejamento{
                 iplanejamento.codigo,
                 iplanejamento.codigo_empresa,
                 iplanejamento.descricao,
-                iplanejamento.ano_fim,
+                iplanejamento.ano_inicio,
                 iplanejamento.ano_fim,
                 iplanejamento.missao,
                 iplanejamento.visao,

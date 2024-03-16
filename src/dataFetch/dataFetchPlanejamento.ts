@@ -44,6 +44,35 @@ class DataFetchPlanejamento{
     }
 
 
+    async sendPost ():Promise<any>{
+
+        console.log(`------------------------------------`)
+        console.log(`${this.API_URL}/${this._endPoint}`)
+        console.log(`------------------------------------`)
+        try{
+
+        const response = await fetch( `${this.API_URL}/${this._endPoint}`, 
+            {
+                method:'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify( this._dadosBody )
+
+            }
+        );
+
+        if(!response.ok)
+            throw('Erro ao obter dados da API exec')
+        else
+
+        return await response.json();
+        }catch(Error){
+            throw('Erro ao obter dados da API final')
+        }
+
+    }
+
 
 
 }

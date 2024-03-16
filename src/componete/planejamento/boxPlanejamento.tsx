@@ -22,15 +22,24 @@ const BoxPlanejamento=( {listaIplanejamento}:PropsBoxPlanejamento )=>{
 
     const [dadosPLanejamento, setDadosPlanejamento] = useState(listaIplanejamento)
     const [planejamento, setPlanejamento] = useState( new Planejamento('', '', '',  '', '', '', '', '', '', '', ) )
-    
+    const [ieAtualiza, setIeAtualiza] = useState(false)    
 
     useEffect(()=>{
         listaPlanejamento()
+        
     },[])
+
+
+    useEffect(()=>{
+        listaPlanejamento()
+        
+    },[ieAtualiza === true])
+
 
     const listaPlanejamento = async ()=>{
         const response =   new DataFetchPlanejamento('planejamento');
         setDadosPlanejamento((await response.sendGet()))
+        setIeAtualiza(false)
 
     }
 
@@ -61,7 +70,7 @@ return(
             border="1px solid #000"
         >
 
-            <FormPlanejamento planejamento={planejamento} setPlanejamento={setPlanejamento}/>
+            <FormPlanejamento setIeAtualiza={setIeAtualiza} planejamento={planejamento} setPlanejamento={setPlanejamento}/>
 
         </Item>
     

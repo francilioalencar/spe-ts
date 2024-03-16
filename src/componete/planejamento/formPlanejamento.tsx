@@ -9,28 +9,30 @@ import Textarea from "../elements/textarea"
 
 
 interface PropsFormPlanejamento{
-    planejamento    : Planejamento;
-    setPlanejamento : React.Dispatch<React.SetStateAction<Planejamento>>
+    planejamento        :   Planejamento;
+    setPlanejamento     :   React.Dispatch<React.SetStateAction<Planejamento>>
+    setIeAtualiza       :   React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
-const FormPlanejamento=({planejamento, setPlanejamento}:PropsFormPlanejamento)=>{
+const FormPlanejamento=({setIeAtualiza, planejamento, setPlanejamento}:PropsFormPlanejamento)=>{
 
 
-    let codigo          =  document.querySelector('input[name=codigo]') as HTMLInputElement;
-    let codigo_empresa  =  document.querySelector('input[name=codigo_empresa]') as HTMLInputElement;
-    let descricao       =  document.querySelector('textarea[name=descricao]') as HTMLInputElement;
-    let ano_inicio      =  document.querySelector('input[name=ano_inicio]') as HTMLInputElement;
-    let ano_fim         =  document.querySelector('input[name=ano_fim]') as HTMLInputElement;
-    let missao          =  document.querySelector('textarea[name=missao]') as HTMLInputElement;
-    let visao           =  document.querySelector('textarea[name=visao]') as HTMLInputElement;
-    let valores         =  document.querySelector('textarea[name=valores]') as HTMLInputElement;
-    let proposito       =  document.querySelector('textarea[name=proposito]') as HTMLInputElement;
-    let situacao        =  document.querySelector('input[name=situacao]') as HTMLInputElement;
+    let codigo          =  document.querySelector('Input[name=codigo]') as HTMLInputElement;
+    let codigo_empresa  =  document.querySelector('Input[name=codigo_empresa]') as HTMLInputElement;
+    let descricao       =  document.querySelector('Input[name=descricao]') as HTMLInputElement;
+    let ano_inicio      =  document.querySelector('Input[name=ano_inicio]') as HTMLInputElement;
+    let ano_fim         =  document.querySelector('Input[name=ano_fim]') as HTMLInputElement;
+    let missao          =  document.querySelector('Textarea[name=missao]') as HTMLInputElement;
+    let visao           =  document.querySelector('Textarea[name=visao]') as HTMLInputElement;
+    let valores         =  document.querySelector('Textarea[name=valores]') as HTMLInputElement;
+    let proposito       =  document.querySelector('Textarea[name=proposito]') as HTMLInputElement;
+    let situacao        =  document.querySelector('Input[name=situacao]') as HTMLInputElement;
 
 
+    const handleBtnSalvar = () => {
 
-    const handlePlanejamento=(target: EventTarget & HTMLInputElement | EventTarget & HTMLTextAreaElement)=>{
+
         const iplanejamento ={
             codigo:         codigo.value ,
             codigo_empresa: codigo_empresa.value,
@@ -41,13 +43,45 @@ const FormPlanejamento=({planejamento, setPlanejamento}:PropsFormPlanejamento)=>
             visao:          visao.value,
             valores:        valores.value,
             proposito:      proposito.value,
-            situacao:       situacao.value
+            situacao:       situacao.checked === true ? 'A' : 'I'
         }
 
-        console.log(iplanejamento)
+        
 
-        setPlanejamento( new Planejamento('', '', '', '', '', '', '', '', '', '', ))
-        //setPlanejamento( Planejamento.setPlanejamento(iplanejamento) )
+        const planejamento :  Planejamento =  Planejamento.setPlanejamento(iplanejamento);
+        
+        //new Planejamento(codigo.value, codigo_empresa.value , descricao.value, ano_inicio.value , ano_fim.value, missao.value, visao.value, valores.value , proposito.value, situacao.checked === true ? 'A' : 'I' ); 
+        setIeAtualiza(true)
+        planejamento.gravaPlanejamento()
+        
+        
+        //setPlanejamento( )
+        console.log(planejamento)
+
+
+
+    }
+
+    const handlePlanejamento=(target: EventTarget & HTMLInputElement | EventTarget & HTMLTextAreaElement)=>{
+
+
+
+        const iplanejamento ={
+            codigo:         target.name    === 'codigo' ? target.value  :  codigo.value ,
+            codigo_empresa: target.name    === 'codigo_empresa' ? target.value  :codigo_empresa.value,
+            descricao:      target.name    === 'descricao' ? target.value  :descricao.value,
+            ano_inicio:     target.name    === 'ano_inicio' ? target.value  :ano_inicio.value,
+            ano_fim:        target.name    === 'ano_fim' ? target.value  :ano_fim.value,
+            missao:         target.name    === 'missao' ? target.value  :missao.value,
+            visao:          target.name    === 'visao' ? target.value  :visao.value,
+            valores:        target.name    === 'valores' ? target.value  :valores.value,
+            proposito:      target.name    === 'proposito' ? target.value  :proposito.value,
+            situacao:       target.name    === 'situacao' ? target.value  :situacao.checked === true ? 'A' : 'I'
+        }
+
+        setPlanejamento( Planejamento.setPlanejamento(iplanejamento) )
+
+
     }
 
 
@@ -68,6 +102,8 @@ const FormPlanejamento=({planejamento, setPlanejamento}:PropsFormPlanejamento)=>
                     flexbasis="calc(48% - 18px)"
                     
                 >
+                    
+                    
                     <Label>Código</Label>
                     <Input 
                         width={'50%'}
@@ -200,7 +236,9 @@ const FormPlanejamento=({planejamento, setPlanejamento}:PropsFormPlanejamento)=>
 
             <Row>
 
-                <Button>Salvar</Button>
+                <Button
+                    onClick={handleBtnSalvar}
+                >Salvar</Button>
                 <Button>Gravar</Button>
 
             </Row>
